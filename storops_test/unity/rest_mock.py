@@ -90,7 +90,7 @@ class MockRestClient(ConnectorMock):
         for index in indices.get('indices', []):
             if url.lower() != index['url'].lower():
                 continue
-            elif body and body != index.get('body', None):
+            elif not cls.compare_json_body(body, index.get('body', None)):
                 continue
             response = index['response']
             break
@@ -106,13 +106,36 @@ class MockRestClient(ConnectorMock):
         return json.loads(string_indices, encoding='utf-8')
 
     def _get_mock_output(self, url, kwargs):
-        body = kwargs.get('body', '')
+        body = kwargs.get('body', None)
         resp_body = self.get_mock_output([url, body])
         if len(resp_body) > 0:
             ret = json.loads(resp_body)
         else:
             ret = None
         return ret
+
+    @classmethod
+    def compare_json_body(cls, obj1, obj2):
+        if all((not obj1, not obj2)):
+            # cover the case: obj1={}, obj2=None
+            return True
+        else:
+            return cls.ordered(obj1) == cls.ordered(obj2)
+
+    @classmethod
+    def ordered(cls, obj):
+        """Normalize the JSON object.
+
+        from https://stackoverflow.com/questions/25851183/
+        how-to-compare-two-json-objects-with-the-
+        same-elements-in-a-different-order-equa
+        """
+        if isinstance(obj, dict):
+            return sorted((k, cls.ordered(v)) for k, v in obj.items())
+        if isinstance(obj, list):
+            return sorted(cls.ordered(x) for x in obj)
+        else:
+            return obj
 
 
 @allow_omit_parentheses
