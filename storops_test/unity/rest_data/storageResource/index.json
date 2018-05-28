@@ -21,6 +21,10 @@
       "response": "sv_4.json"
     },
     {
+      "url": "/api/instances/storageResource/sv_5?compact=True&fields=blockHostAccess,datastores,dedupStatus,description,esxFilesystemBlockSize,esxFilesystemMajorVersion,filesystem,health,hostVVolDatastore,id,isReplicationDestination,isSnapSchedulePaused,luns,metadataSize,metadataSizeAllocated,name,perTierSizeUsed,pools,relocationPolicy,replicationType,sizeAllocated,sizeTotal,sizeUsed,snapCount,snapSchedule,snapsSizeAllocated,snapsSizeTotal,thinStatus,type,virtualVolumes,vmwareUUID",
+      "response": "sv_5.json"
+    },
+    {
       "url": "/api/instances/storageResource/sv_16?compact=True&fields=blockHostAccess,datastores,dedupStatus,description,esxFilesystemBlockSize,esxFilesystemMajorVersion,filesystem,health,hostVVolDatastore,id,isReplicationDestination,isSnapSchedulePaused,luns,metadataSize,metadataSizeAllocated,name,perTierSizeUsed,pools,relocationPolicy,replicationType,sizeAllocated,sizeTotal,sizeUsed,snapCount,snapSchedule,snapsSizeAllocated,snapsSizeTotal,thinStatus,type,virtualVolumes,vmwareUUID",
       "response": "sv_16.json"
     },
@@ -63,6 +67,10 @@
     {
       "url": "/api/instances/storageResource/sv_2026?compact=True&fields=blockHostAccess,datastores,dedupStatus,description,esxFilesystemBlockSize,esxFilesystemMajorVersion,filesystem,health,hostVVolDatastore,id,isReplicationDestination,isSnapSchedulePaused,luns,metadataSize,metadataSizeAllocated,name,perTierSizeUsed,pools,relocationPolicy,replicationType,sizeAllocated,sizeTotal,sizeUsed,snapCount,snapSchedule,snapsSizeAllocated,snapsSizeTotal,thinStatus,type,virtualVolumes,vmwareUUID",
       "response": "sv_2026.json"
+    },
+    {
+      "url": "/api/instances/storageResource/sv_5610?compact=True&fields=blockHostAccess,datastores,dedupStatus,description,esxFilesystemBlockSize,esxFilesystemMajorVersion,filesystem,health,hostVVolDatastore,id,isReplicationDestination,isSnapSchedulePaused,luns,metadataSize,metadataSizeAllocated,name,perTierSizeUsed,pools,relocationPolicy,replicationType,sizeAllocated,sizeTotal,sizeUsed,snapCount,snapSchedule,snapsSizeAllocated,snapsSizeTotal,thinStatus,type,virtualVolumes,vmwareUUID",
+      "response": "sv_5610.json"
     },
     {
       "url": "/api/instances/storageResource/res_23/action/modifyFilesystem?compact=True",
@@ -1126,6 +1134,35 @@
     {
       "url": "/api/instances/storageResource/res_6/action/modifyConsistencyGroup?compact=True",
       "body": {"lunRemove": [{"lun": {"id": "sv_15"}}], "lunAdd": [{"lun": {"id": "sv_3341"}}]},
+      "response": "empty.json"
+    },
+    {
+      "url": "/api/types/storageResource/action/createVmwareLun?compact=True",
+      "body": {"name": "VMFS datastore", "lunParameters": {"size": 107374182400, "pool": {"id": "pool_1"}}},
+      "response": "create_vmfs_res_5613.json"
+    },
+    {
+      "url": "/api/types/storageResource/action/createVmwareLun?compact=True",
+      "body": {"name": "VMFS datastore 2", "vmwareIscsiParameters": {"majorVersion": 5, "blockSize": 2}, "lunParameters": {"size": 107374182400, "pool": {"id": "pool_1"}}},
+      "response": "create_vmfs_res_5613.json"
+    },
+    {
+      "url": "/api/instances/storageResource/res_5613?compact=True&fields=blockHostAccess,datastores,dedupStatus,description,esxFilesystemBlockSize,esxFilesystemMajorVersion,filesystem,health,hostVVolDatastore,id,isReplicationDestination,isSnapSchedulePaused,luns,metadataSize,metadataSizeAllocated,name,perTierSizeUsed,pools,relocationPolicy,replicationType,sizeAllocated,sizeTotal,sizeUsed,snapCount,snapSchedule,snapsSizeAllocated,snapsSizeTotal,thinStatus,type,virtualVolumes,vmwareUUID",
+      "response": "res_5613.json"
+    },
+    {
+      "url": "/api/instances/storageResource/res_5613/action/modifyVmwareLun?compact=True",
+      "body": {"name": "vmfs_new_name"},
+      "response": "empty.json"
+    },
+    {
+      "url": "/api/instances/storageResource/res_5613/action/modifyVmwareLun?compact=True",
+      "body": {"name": "vmfs_new_name", "vmwareIscsiParameters": {"majorVersion": 6, "blockSize": 4}, "lunParameters": {"defaultNode": 1}},
+      "response": "empty.json"
+    },
+    {
+      "url": "/api/instances/storageResource/res_5613?compact=True",
+      "body": {"forceVvolDeletion": false, "forceSnapDeletion": false},
       "response": "empty.json"
     }
   ]

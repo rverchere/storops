@@ -26,7 +26,8 @@ from storops.exception import UnitySnapNameInUseError, \
     UnityLunNameInUseError, UnityLunShrinkNotSupportedError, \
     UnityNothingToModifyError, UnityPerfMonNotEnabledError, \
     UnityThinCloneLimitExceededError
-from storops.unity.enums import HostLUNAccessEnum, NodeEnum, RaidTypeEnum
+from storops.unity.enums import HostLUNAccessEnum, NodeEnum, RaidTypeEnum, \
+    ESXFilesystemBlockSizeEnum, ESXFilesystemMajorVersionEnum
 from storops.unity.resource.disk import UnityDisk
 from storops.unity.resource.host import UnityBlockHostAccessList, UnityHost
 from storops.unity.resource.lun import UnityLun, UnityLunList
@@ -338,6 +339,35 @@ class UnityLunTest(TestCase):
         lun = UnityLun.get(cli=t_rest(), _id="sv_4")
         r = lun.update_hosts(host_names=["10.244.209.90"])
         assert_that(r, none())
+
+    @patch_rest
+    def test_is_vmware_vmfs_false(self):
+        vmfs = UnityLun.get(cli=t_rest(), _id='sv_4')
+        assert_that(vmfs.is_vmware_vmfs, equal_to(False))
+
+    @patch_rest
+    def test_is_vmware_vmfs_true(self):
+        vmfs = UnityLun.get(cli=t_rest(), _id='sv_5613')
+        assert_that(vmfs.is_vmware_vmfs, equal_to(True))
+
+    @patch_rest
+    def test_modify_vmfs_name(self):
+        vmfs = UnityLun.get(cli=t_rest(), _id='sv_5613')
+        vmfs.name = 'vmfs_new_name'
+
+    @patch_rest
+    def test_modify_vmfs_major_version_block_size(self):
+        vmfs = UnityLun.get(cli=t_rest(), _id='sv_5613')
+        resp = vmfs.modify(name='vmfs_new_name', sp=1,
+                           major_version=ESXFilesystemMajorVersionEnum.VMFS_6,
+                           block_size=ESXFilesystemBlockSizeEnum._4MB)
+        assert_that(resp.is_ok(), equal_to(True))
+
+    @patch_rest
+    def test_delete_vmfs(self):
+        vmfs = UnityLun.get(cli=t_rest(), _id='sv_5613')
+        resp = vmfs.delete()
+        assert_that(resp.is_ok(), equal_to(True))
 
 
 class UnityLunEnablePerfStatsTest(TestCase):

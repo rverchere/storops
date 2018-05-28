@@ -72,6 +72,7 @@ def prepare_lun_parameters(**kwargs):
 class UnityLun(UnityResource):
     _is_cg_member = None
     _cg = None
+    _is_vmware_vmfs = None
 
     @classmethod
     def get_nested_properties(cls):
@@ -86,7 +87,8 @@ class UnityLun(UnityResource):
     def create(cls, cli, name, pool, size, sp=None, host_access=None,
                is_thin=None, description=None, io_limit_policy=None,
                is_repl_dst=None, tiering_policy=None, snap_schedule=None,
-               is_compression=None):
+               is_compression=None, create_vmfs=False, major_version=None,
+               block_size=None):
         pool_clz = storops.unity.resource.pool.UnityPool
         pool = pool_clz.get(cli, pool)
 
@@ -95,9 +97,13 @@ class UnityLun(UnityResource):
             host_access=host_access, description=description,
             io_limit_policy=io_limit_policy, is_repl_dst=is_repl_dst,
             tiering_policy=tiering_policy, snap_schedule=snap_schedule,
-            is_compression=is_compression)
+            is_compression=is_compression, major_version=major_version,
+            block_size=block_size)
+
+        create_method = 'createVmwareLun' if create_vmfs else 'createLun'
+
         resp = cli.type_action(UnityStorageResource().resource_class,
-                               'createLun', **req_body)
+                               create_method, **req_body)
         resp.raise_if_err()
         sr = UnityStorageResource(_id=resp.resource_id, cli=cli)
         return sr.luns[0]
@@ -169,6 +175,14 @@ class UnityLun(UnityResource):
     def max_kbps(self):
         return self.effective_io_limit_max_kbps
 
+    @property
+    def is_vmware_vmfs(self):
+        # None means unknown, requires a query
+        if self._is_vmware_vmfs is None:
+            self._is_vmware_vmfs = (self.storage_resource.type ==
+                                    StorageResourceTypeEnum.VMWARE_ISCSI)
+        return self._is_vmware_vmfs
+
     def expand(self, new_size):
         """ expand the LUN to a new size
 
@@ -188,7 +202,10 @@ class UnityLun(UnityResource):
             name=kwargs.get('name'),
             description=kwargs.get('description'),
             replicationParameters=cli.make_body(
-                isReplicationDestination=kwargs.get('is_repl_dst')))
+                isReplicationDestination=kwargs.get('is_repl_dst')),
+            vmwareIscsiParameters=cli.make_body(
+                majorVersion=kwargs.get('major_version'),
+                blockSize=kwargs.get('block_size')))
 
         # `hostAccess` could be empty list which is used to remove all host
         # access
@@ -200,7 +217,7 @@ class UnityLun(UnityResource):
     def modify(self, name=None, size=None, host_access=None,
                description=None, sp=None, io_limit_policy=None,
                is_repl_dst=None, tiering_policy=None, snap_schedule=None,
-               is_compression=None):
+               is_compression=None, major_version=None, block_size=None):
         if self.is_cg_member:
             if is_repl_dst is not None or snap_schedule is not None:
                 log.warning('LUN in CG not support to modify `is_repl_dst` and'
@@ -218,9 +235,16 @@ class UnityLun(UnityResource):
                 host_access=host_access, description=description,
                 io_limit_policy=io_limit_policy, is_repl_dst=is_repl_dst,
                 tiering_policy=tiering_policy, snap_schedule=snap_schedule,
-                is_compression=is_compression)
-            resp = self._cli.action(UnityStorageResource().resource_class,
-                                    self.get_id(), 'modifyLun', **req_body)
+                is_compression=is_compression, major_version=major_version,
+                block_size=block_size)
+
+            if self.is_vmware_vmfs:
+                resp = self._cli.action(UnityStorageResource().resource_class,
+                                        self.storage_resource.get_id(),
+                                        'modifyVmwareLun', **req_body)
+            else:
+                resp = self._cli.action(UnityStorageResource().resource_class,
+                                        self.get_id(), 'modifyLun', **req_body)
             resp.raise_if_err()
             return resp
 
@@ -230,7 +254,7 @@ class UnityLun(UnityResource):
         if not self.existed or sr is None:
             raise UnityResourceNotFoundError(
                 'cannot find lun {}.'.format(self.get_id()))
-        resp = self._cli.delete(sr.resource_class, self.get_id(),
+        resp = self._cli.delete(sr.resource_class, sr.get_id(),
                                 forceSnapDeletion=force_snap_delete,
                                 forceVvolDeletion=force_vvol_delete,
                                 async=async)
