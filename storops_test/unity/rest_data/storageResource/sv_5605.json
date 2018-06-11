@@ -1,12 +1,44 @@
 {
-  "error": {
-    "errorCode": 108009078,
-    "httpStatusCode": 409,
-    "messages": [
+  "content": {
+    "id": "sv_5605",
+    "type": 8,
+    "replicationType": 0,
+    "thinStatus": 1,
+    "dedupStatus": 0,
+    "relocationPolicy": 0,
+    "health": {
+      "value": 5,
+      "descriptionIds": [
+        "ALRT_VOL_OK"
+      ],
+      "descriptions": [
+        "The LUN is operating normally. No action is required."
+      ]
+    },
+    "name": "openstack_lun",
+    "description": "",
+    "isReplicationDestination": false,
+    "sizeTotal": 107374182400,
+    "sizeAllocated": 0,
+    "perTierSizeUsed": [
+      2952790016,
+      0,
+      0
+    ],
+    "metadataSize": 5100273664,
+    "metadataSizeAllocated": 2684354560,
+    "snapsSizeTotal": 0,
+    "snapsSizeAllocated": 0,
+    "snapCount": 0,
+    "pools": [
       {
-        "en-US": "The specified LUN cannot be deleted because it has one or more dependent thin clones. (Error Code:0x6701676)"
+        "id": "pool_1"
       }
     ],
-    "created": "2017-09-30T07:07:10.495Z"
+    "luns": [
+      {
+        "id": "sv_5605"
+      }
+    ]
   }
 }

@@ -47,7 +47,7 @@ from storops.unity.resource.port import UnityIpPortList, UnityIoLimitPolicy, \
     UnitySasPortList, UnityIscsiNodeList
 from storops.unity.resource.snap import UnitySnapList
 from storops.unity.resource.sp import UnityStorageProcessorList
-from storops.unity.resource.storage_resource import UnityConsistencyGroup, \
+from storops.unity.resource.cg import UnityConsistencyGroup, \
     UnityConsistencyGroupList
 from storops.unity.resource.tenant import UnityTenant, UnityTenantList
 from storops.unity.resource.vmware import UnityCapabilityProfileList
@@ -259,21 +259,25 @@ class UnitySystem(UnitySingletonResource):
     def create_io_limit_policy(self, name, max_iops=None, max_kbps=None,
                                policy_type=None, is_shared=None,
                                description=None, max_iops_density=None,
-                               max_kbps_density=None):
+                               max_kbps_density=None, burst_rate=None,
+                               burst_time=None, burst_frequency=None):
         return UnityIoLimitPolicy.create(
             self._cli, name, max_iops=max_iops, max_kbps=max_kbps,
             policy_type=policy_type, is_shared=is_shared,
             description=description,
             max_iops_density=max_iops_density,
-            max_kbps_density=max_kbps_density)
+            max_kbps_density=max_kbps_density,
+            burst_rate=burst_rate,
+            burst_time=burst_time,
+            burst_frequency=burst_frequency)
 
     def get_cg(self, _id=None, name=None, **filters):
         return self._get_unity_rsc(UnityConsistencyGroupList, _id=_id,
                                    name=name, **filters)
 
-    def create_cg(self, name, description=None, lun_list=None, hosts=None):
+    def create_cg(self, name, description=None, lun_add=None, hosts=None):
         return UnityConsistencyGroup.create(
-            self._cli, name, description=description, lun_list=lun_list,
+            self._cli, name, description=description, lun_add=lun_add,
             hosts=hosts)
 
     def get_doc(self, resource):

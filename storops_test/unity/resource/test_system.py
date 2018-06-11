@@ -478,11 +478,23 @@ class UnitySystemTest(TestCase):
         assert_that(setting.max_kbps, equal_to(1234))
 
     @patch_rest
+    def test_create_burst_policy(self):
+        unity = t_unity()
+        policy = unity.create_io_limit_policy(
+            'burst_policy', description='storops', max_iops=1000,
+            max_kbps=20480, burst_rate=50, burst_time=10, burst_frequency=2)
+        assert_that(policy.name, equal_to('burst_policy'))
+        setting = policy.io_limit_rule_settings[0]
+        assert_that(setting.burst_rate, equal_to(50))
+        assert_that(setting.burst_time, equal_to(10))
+        assert_that(setting.burst_frequency, equal_to(2))
+
+    @patch_rest
     def test_create_cg(self):
         lun1 = UnityLun(cli=t_rest(), _id='sv_3339')
         lun2 = UnityLun(cli=t_rest(), _id='sv_3340')
         unity = t_unity()
-        cg = unity.create_cg('Muse', lun_list=[lun1, lun2])
+        cg = unity.create_cg('Muse', lun_add=[lun1, lun2])
         assert_that(cg.name, equal_to('Muse'))
         assert_that(len(cg.luns), equal_to(2))
 
