@@ -602,6 +602,7 @@ class VNXMirrorGroupAsyncTest(TestCase):
         assert_that(mg.role, equal_to('Primary'))
         assert_that(mg.condition, equal_to('Normal'))
         assert_that(mg.policy, equal_to(VNXMirrorGroupRecoveryPolicy.AUTO))
+        assert_that(len(mg.group_mirrors), equal_to(1))
 
     @patch_cli
     def test_get_all(self):
