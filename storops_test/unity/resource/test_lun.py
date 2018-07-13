@@ -25,7 +25,8 @@ from storops import UnitySystem
 from storops.exception import UnitySnapNameInUseError, \
     UnityLunNameInUseError, UnityLunShrinkNotSupportedError, \
     UnityNothingToModifyError, UnityPerfMonNotEnabledError, \
-    UnityThinCloneLimitExceededError, UnityCGLunActionNotSupportError
+    UnityThinCloneLimitExceededError, UnityCGMemberActionNotSupportError, \
+    UnityThinCloneNotAllowedError
 from storops.unity.enums import HostLUNAccessEnum, NodeEnum, RaidTypeEnum
 from storops.unity.resource.disk import UnityDisk
 from storops.unity.resource.host import UnityBlockHostAccessList, UnityHost
@@ -379,10 +380,16 @@ class UnityLunEnablePerfStatsTest(TestCase):
     def test_create_snap_of_member_snap_not_support(self):
         lun = UnityLun(cli=t_rest(), _id='sv_58')
         assert_that(calling(lun.create_snap).with_args(name='not-support'),
-                    raises(UnityCGLunActionNotSupportError))
+                    raises(UnityCGMemberActionNotSupportError))
 
     @patch_rest
     def test_thinclone_of_member_snap_not_support(self):
         lun = UnityLun(cli=t_rest(version='4.3'), _id='sv_58')
         assert_that(calling(lun.thin_clone).with_args('not-support'),
-                    raises(UnityCGLunActionNotSupportError))
+                    raises(UnityCGMemberActionNotSupportError))
+
+    @patch_rest
+    def test_thinclone_of_thick_lun_not_allowed(self):
+        lun = UnityLun(cli=t_rest(version='4.3'), _id='sv_59')
+        assert_that(calling(lun.thin_clone).with_args('not-allowed'),
+                    raises(UnityThinCloneNotAllowedError))

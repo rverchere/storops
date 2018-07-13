@@ -1,0 +1,34 @@
+{
+    "content": {
+        "id": "38654707282",
+        "creatorType": 2,
+        "accessType": 1,
+        "state": 2,
+        "operationalStatus": [
+            2
+        ],
+        "instanceId": "root/emc:EMC_UEM_VolumeSnapLeaf%InstanceID=38654707282",
+        "name": "20180629055453.644+00-001",
+        "description": "",
+        "creationTime": "2018-06-29T05:54:53.643Z",
+        "isSystemSnap": false,
+        "isModifiable": false,
+        "isReadOnly": true,
+        "isModified": false,
+        "isAutoDelete": true,
+        "size": 1073741824,
+        "storageResource": {
+            "id": "res_36"
+        },
+        "lun": {
+            "id": "sv_974"
+        },
+        "snapGroup": {
+            "id": "85899345958"
+        },
+        "creatorUser": {
+            "id": "user_admin"
+        }
+    }
+}
+

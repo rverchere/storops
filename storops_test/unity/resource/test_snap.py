@@ -17,11 +17,12 @@ from __future__ import unicode_literals
 
 from unittest import TestCase
 
-from hamcrest import assert_that, equal_to, instance_of, raises, none
+from hamcrest import assert_that, equal_to, instance_of, raises, none, calling
 
 from storops.exception import UnityShareOnCkptSnapError, \
     UnityDeleteAttachedSnapError, UnityResourceNotFoundError, \
-    UnitySnapAlreadyPromotedException, UnityException
+    UnitySnapAlreadyPromotedException, UnityException, \
+    UnityThinCloneNotAllowedError, UnityCGMemberActionNotSupportError
 from storops.unity.enums import FilesystemSnapAccessTypeEnum, \
     SnapCreatorTypeEnum, SnapStateEnum, NFSTypeEnum, CIFSTypeEnum
 from storops.unity.resource.filesystem import UnityFileSystem
@@ -208,7 +209,7 @@ class UnitySnapTest(TestCase):
 
     @patch_rest
     def test_thin_clone_auto_delete(self):
-        snap = UnitySnap(_id='38654709077', cli=t_rest(version='4.2.0'))
+        snap = UnitySnap(_id='38654705848', cli=t_rest(version='4.2.0'))
 
         def _inner():
             snap.thin_clone(name='test_thin_clone',
@@ -227,3 +228,15 @@ class UnitySnapTest(TestCase):
         snap = UnitySnap(cli=t_rest(), _id='38654705785')
         backup = snap.restore(backup="backup_snap")
         assert_that(backup.id, equal_to("38654700002"))
+
+    @patch_rest
+    def test_thinclone_of_member_snap_not_support(self):
+        snap = UnitySnap(cli=t_rest(version='4.3'), _id='38654707282')
+        assert_that(calling(snap.thin_clone).with_args('not-support'),
+                    raises(UnityCGMemberActionNotSupportError))
+
+    @patch_rest
+    def test_thinclone_of_thick_lun_snap_not_allowed(self):
+        snap = UnitySnap(cli=t_rest(version='4.3'), _id='38654707273')
+        assert_that(calling(snap.thin_clone).with_args('not-allowed'),
+                    raises(UnityThinCloneNotAllowedError))

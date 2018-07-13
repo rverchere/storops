@@ -392,6 +392,18 @@
     {
       "url": "/api/types/snap/instances?compact=True&fields=accessType,attachedWWN,creationTime,creatorSchedule,creatorType,creatorUser,description,expirationTime,id,instanceId,ioLimitPolicy,isAutoDelete,isModifiable,isModified,isReadOnly,isSystemSnap,lastWritableTime,lun,name,operationalStatus,parentSnap,size,snapGroup,state,storageResource&filter=lun eq \"sv_58\" and snapGroup eq \"85899345958\"",
       "response": "filter_member_snap_sv_58.json"
+    },
+    {
+      "url": "/api/instances/snap/38654705848?compact=True&fields=accessType,attachedWWN,creationTime,creatorSchedule,creatorType,creatorUser,description,expirationTime,id,instanceId,ioLimitPolicy,isAutoDelete,isModifiable,isModified,isReadOnly,isSystemSnap,lastWritableTime,lun,name,operationalStatus,parentSnap,size,snapGroup,state,storageResource",
+      "response": "38654705848.json"
+    },
+    {
+      "url": "/api/instances/snap/38654707273?compact=True&fields=accessType,attachedWWN,creationTime,creatorSchedule,creatorType,creatorUser,description,expirationTime,id,instanceId,ioLimitPolicy,isAutoDelete,isModifiable,isModified,isReadOnly,isSystemSnap,lastWritableTime,lun,name,operationalStatus,parentSnap,size,snapGroup,state,storageResource",
+      "response": "38654707273.json"
+    },
+    {
+      "url": "/api/instances/snap/38654707282?compact=True&fields=accessType,attachedWWN,creationTime,creatorSchedule,creatorType,creatorUser,description,expirationTime,id,instanceId,ioLimitPolicy,isAutoDelete,isModifiable,isModified,isReadOnly,isSystemSnap,lastWritableTime,lun,name,operationalStatus,parentSnap,size,snapGroup,state,storageResource",
+      "response": "38654707282.json"
     }
   ]
 }

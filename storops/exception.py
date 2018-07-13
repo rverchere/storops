@@ -1310,5 +1310,10 @@ class UnityTCSnapUnderDestroyError(UnityThinCloneException):
     error_code = 108008719
 
 
-class UnityCGLunActionNotSupportError(UnityException):
-    message = 'The action not support on lun in cg. Execute it on cg object.'
+class UnityCGMemberActionNotSupportError(UnityException):
+    message = ('The action not support on lun in cg or member snap of cg snap.'
+               ' Execute it on cg level.')
+
+
+class UnityThinCloneNotAllowedError(UnityException):
+    message = 'Thinclone not support on thick luns or snaps of thick lun.'

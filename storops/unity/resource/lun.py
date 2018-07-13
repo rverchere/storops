@@ -19,7 +19,8 @@ import logging
 
 import storops.unity.resource.pool
 from storops.exception import UnityBaseHasThinCloneError, \
-    UnityResourceNotFoundError, UnityCGLunActionNotSupportError
+    UnityResourceNotFoundError, UnityCGMemberActionNotSupportError, \
+    UnityThinCloneNotAllowedError
 from storops.lib.thinclone_helper import TCHelper
 from storops.lib.version import version
 from storops.unity.client import UnityClient
@@ -307,7 +308,7 @@ class UnityLun(UnityResource):
     def create_snap(self, name=None, description=None, is_auto_delete=None,
                     retention_duration=None):
         if self.is_cg_member:
-            raise UnityCGLunActionNotSupportError()
+            raise UnityCGMemberActionNotSupportError()
         return UnitySnap.create(self._cli, self.storage_resource,
                                 name=name, description=description,
                                 is_auto_delete=is_auto_delete,
@@ -317,7 +318,11 @@ class UnityLun(UnityResource):
     @version(">=4.2")
     def thin_clone(self, name, io_limit_policy=None, description=None):
         if self.is_cg_member:
-            raise UnityCGLunActionNotSupportError()
+            raise UnityCGMemberActionNotSupportError()
+
+        if not self.is_thin_enabled:
+            raise UnityThinCloneNotAllowedError()
+
         return TCHelper.thin_clone(self._cli, self, name, io_limit_policy,
                                    description)
 
