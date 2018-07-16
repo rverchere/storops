@@ -1,0 +1,54 @@
+{
+    "content": {
+        "id": "sv_59",
+        "operationalStatus": [
+            2
+        ],
+        "type": 2,
+        "tieringPolicy": 0,
+        "defaultNode": 1,
+        "currentNode": 1,
+        "auSize": 8192,
+        "instanceId": "root/emc:EMC_UEM_StorageVolumeLeaf%InstanceID=sv_59",
+        "creationTime": "2018-06-28T07:46:13.000Z",
+        "health": {
+            "value": 5,
+            "descriptionIds": [
+                "ALRT_VOL_OK"
+            ],
+            "descriptions": [
+                "The LUN is operating normally. No action is required."
+            ]
+        },
+        "name": "lun-liangr-1",
+        "description": "",
+        "modificationTime": "2018-06-28T07:46:15.168Z",
+        "sizeTotal": 5368709120,
+        "sizeAllocated": 5368709120,
+        "perTierSizeUsed": [
+            0,
+            8589934592,
+            0
+        ],
+        "isThinEnabled": false,
+        "wwn": "60:06:01:60:15:E0:3A:00:45:92:34:5B:00:2F:61:CE",
+        "isReplicationDestination": false,
+        "isSnapSchedulePaused": false,
+        "objectId": 42949673954,
+        "metadataSize": 3489660928,
+        "metadataSizeAllocated": 3221225472,
+        "snapWwn": "60:06:01:60:15:E0:3A:00:6C:D2:4A:67:8A:06:49:F6",
+        "snapsSize": 5373960192,
+        "snapsSizeAllocated": 0,
+        "snapCount": 1,
+        "storageResource": {
+            "id": "sv_59",
+            "type": 8
+        },
+        "pool": {
+            "id": "pool_2",
+            "raidType": 1,
+            "isFASTCacheEnabled": false
+        }
+    }
+}

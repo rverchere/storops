@@ -786,6 +786,7 @@ VNXMirrorGroupAsync:
     - label: "Recovery Policy:"
       key: "group_mirrors"
       converter: VNXMirrorGroupMirrorAsyncList
+      end_pattern: ""
 
 VNXMirrorGroupMirrorAsync:
   data_src: cli

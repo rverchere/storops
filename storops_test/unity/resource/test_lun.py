@@ -25,7 +25,8 @@ from storops import UnitySystem
 from storops.exception import UnitySnapNameInUseError, \
     UnityLunNameInUseError, UnityLunShrinkNotSupportedError, \
     UnityNothingToModifyError, UnityPerfMonNotEnabledError, \
-    UnityThinCloneLimitExceededError, UnityCGLunActionNotSupportError
+    UnityThinCloneLimitExceededError, UnityCGMemberActionNotSupportError, \
+    UnityThinCloneNotAllowedError
 from storops.unity.enums import HostLUNAccessEnum, NodeEnum, RaidTypeEnum
 from storops.unity.resource.disk import UnityDisk
 from storops.unity.resource.host import UnityBlockHostAccessList, UnityHost
@@ -71,6 +72,7 @@ class UnityLunTest(TestCase):
         assert_that(lun.pool, instance_of(UnityPool))
         assert_that(lun.io_limit_rule, none())
         assert_that(lun.is_compression_enabled, equal_to(False))
+        assert_that(lun.is_data_reduction_enabled, equal_to(False))
 
     @patch_rest
     def test_lun_modify_host_access(self):
@@ -125,6 +127,20 @@ class UnityLunTest(TestCase):
         lun.update()
         assert_that(lun.name, equal_to('RestLun100'))
         assert_that(lun.description, equal_to('Lun description'))
+
+    @patch_rest
+    def test_lun_modify_compression_enabled_v4_2(self):
+        lun = UnityLun(_id='sv_17', cli=t_rest(version='4.2'))
+        lun.modify(is_compression=True)
+        lun.update()
+        assert_that(lun.is_compression_enabled, equal_to(True))
+
+    @patch_rest
+    def test_lun_modify_compression_enabled(self):
+        lun = UnityLun(_id='sv_18', cli=t_rest(version='4.3'))
+        lun.modify(is_compression=True)
+        lun.update()
+        assert_that(lun.is_data_reduction_enabled, equal_to(True))
 
     @patch_rest
     def test_lun_delete(self):
@@ -379,10 +395,16 @@ class UnityLunEnablePerfStatsTest(TestCase):
     def test_create_snap_of_member_snap_not_support(self):
         lun = UnityLun(cli=t_rest(), _id='sv_58')
         assert_that(calling(lun.create_snap).with_args(name='not-support'),
-                    raises(UnityCGLunActionNotSupportError))
+                    raises(UnityCGMemberActionNotSupportError))
 
     @patch_rest
     def test_thinclone_of_member_snap_not_support(self):
         lun = UnityLun(cli=t_rest(version='4.3'), _id='sv_58')
         assert_that(calling(lun.thin_clone).with_args('not-support'),
-                    raises(UnityCGLunActionNotSupportError))
+                    raises(UnityCGMemberActionNotSupportError))
+
+    @patch_rest
+    def test_thinclone_of_thick_lun_not_allowed(self):
+        lun = UnityLun(cli=t_rest(version='4.3'), _id='sv_59')
+        assert_that(calling(lun.thin_clone).with_args('not-allowed'),
+                    raises(UnityThinCloneNotAllowedError))
