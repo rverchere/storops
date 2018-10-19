@@ -75,5 +75,5 @@ class VNXNasPool(VNXResource):
 
     def create_filesystem(self, name, size, mover=1, is_vdm=False):
         fs = storops.vnx.resource.fs
-        fs.VNXFileSystem.create(self._cli, name, size, self, mover, is_vdm)
+        fs.VNXFileSystem.create(self._cli, name, self, size, mover, is_vdm)
         return fs.VNXFileSystem(name=name, cli=self._cli)
