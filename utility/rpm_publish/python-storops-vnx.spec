@@ -7,7 +7,7 @@
 %global pypi_name storops
 
 Name:           python-%{pypi_name}-vnx
-Version:        0.5.11
+Version:        0.5.12
 Release:        1%{?dist}
 Summary:        Library for managing Unity/VNX systems.
 
@@ -70,6 +70,9 @@ Library for managing Unity/VNX systems. Please refer to https://github.com/emc-o
 
 
 %changelog
+* Fri Oct 19 2018 Ryan Liang <ryan.liang@dell.com> - 0.5.12-1
+- Release v0.5.12: https://github.com/emc-openstack/storops/releases/tag/r0.5.12
+
 * Fri Jul 20 2018 Ryan Liang <ryan.liang@dell.com> - 0.5.11-1
 - Release v0.5.11: https://github.com/emc-openstack/storops/releases/tag/r0.5.11
 
