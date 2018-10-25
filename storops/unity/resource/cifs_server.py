@@ -70,13 +70,13 @@ class UnityCifsServer(resource.UnityResource):
                           path=path, cifs_server=self)
 
     def delete(self, skip_domain_unjoin=None, username=None,
-               password=None, async=False):
+               password=None, async_mode=False):
         resp = self._cli.delete(self.resource_class,
                                 self.get_id(),
                                 skipUnjoin=skip_domain_unjoin,
                                 domainUsername=username,
                                 domainPassword=password,
-                                async=async)
+                                async_mode=async_mode)
         resp.raise_if_err()
         return resp
 

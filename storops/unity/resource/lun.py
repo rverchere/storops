@@ -240,7 +240,7 @@ class UnityLun(UnityResource):
             resp.raise_if_err()
             return resp
 
-    def delete(self, async=False, force_snap_delete=False,
+    def delete(self, async_mode=False, force_snap_delete=False,
                force_vvol_delete=False):
         sr = self.storage_resource
         if not self.existed or sr is None:
@@ -249,7 +249,7 @@ class UnityLun(UnityResource):
         resp = self._cli.delete(sr.resource_class, self.get_id(),
                                 forceSnapDeletion=force_snap_delete,
                                 forceVvolDeletion=force_vvol_delete,
-                                async=async)
+                                async_mode=async_mode)
         try:
             resp.raise_if_err()
         except UnityBaseHasThinCloneError:

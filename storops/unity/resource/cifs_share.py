@@ -84,14 +84,14 @@ class UnityCifsShare(UnityResource):
             ret = None
         return ret
 
-    def delete(self, async=False):
+    def delete(self, async_mode=False):
         if self.type == CIFSTypeEnum.CIFS_SNAPSHOT:
-            resp = super(UnityCifsShare, self).delete(async=async)
+            resp = super(UnityCifsShare, self).delete(async_mode=async_mode)
         else:
             fs = self.filesystem.verify()
             sr = fs.storage_resource
             param = self._cli.make_body(cifsShare=self)
-            resp = sr.modify_fs(async=async, cifsShareDelete=[param])
+            resp = sr.modify_fs(async_mode=async_mode, cifsShareDelete=[param])
         resp.raise_if_err()
         return resp
 

@@ -96,8 +96,8 @@ class VNXVdm(VNXResource):
     def get_interfaces(self):
         ret = []
 
-        re_pattern = ('Interfaces to services mapping:'
-                      '\s*(?P<interfaces>(\s*interface=.*)*)')
+        re_pattern = (r'Interfaces to services mapping:'
+                      r'\s*(?P<interfaces>(\s*interface=.*)*)')
 
         out = self._cli.get_dm_interfaces(name=self._get_name(),
                                           is_vdm=True)
@@ -106,8 +106,8 @@ class VNXVdm(VNXResource):
         if m:
             if_list = m.group('interfaces').split('\n')
             for i in if_list:
-                m_if = re.search('\s*interface=(?P<if>.*)\s*:'
-                                 '\s*(?P<type>.*)\s*', i)
+                m_if = re.search(r'\s*interface=(?P<if>.*)\s*:'
+                                 r'\s*(?P<type>.*)\s*', i)
                 if m_if:
                     if_name = m_if.group('if').strip()
                     share_type = m_if.group('type')

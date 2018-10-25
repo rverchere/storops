@@ -54,13 +54,13 @@ class UnityNasServer(UnityResource):
         return cls(_id=resp.resource_id, cli=cli)
 
     def delete(self, skip_domain_unjoin=None, username=None,
-               password=None, async=False):
+               password=None, async_mode=False):
         resp = self._cli.delete(self.resource_class,
                                 self.get_id(),
                                 skipDomainUnjoin=skip_domain_unjoin,
                                 domainUsername=username,
                                 domainPassword=password,
-                                async=async)
+                                async_mode=async_mode)
         resp.raise_if_err()
         return resp
 

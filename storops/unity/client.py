@@ -188,10 +188,10 @@ class UnityClient(PerfManager):
         base_url = '/api/instances/{}/{}/action/{}'
         url = base_url.format(type_name, obj_id, action)
         url_params = {}
-        if 'async' in kwargs:
-            async = kwargs['async']
-            del kwargs['async']
-            if async:
+        if 'async_mode' in kwargs:
+            async_mode = kwargs['async_mode']
+            del kwargs['async_mode']
+            if async_mode:
                 url_params['timeout'] = 0
         body = self.make_body(kwargs, allow_empty=True)
         return self.rest_post(url, body, **url_params)
@@ -207,10 +207,10 @@ class UnityClient(PerfManager):
     def delete(self, type_name, _id, **kwargs):
         url = '/api/instances/{}/{}'.format(type_name, _id)
         url_params = {'compact': True}
-        if 'async' in kwargs:
-            async = kwargs['async']
-            del kwargs['async']
-            if async:
+        if 'async_mode' in kwargs:
+            async_mode = kwargs['async_mode']
+            del kwargs['async_mode']
+            if async_mode:
                 url_params['timeout'] = 0
         body = self.make_body(kwargs)
         return self.rest_delete(url, body, **url_params)

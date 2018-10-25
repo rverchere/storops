@@ -33,7 +33,7 @@ class UnityJob(UnityResource):
     @classmethod
     def create_nfs_share(cls, cli, pool, nas_server, name, size,
                          is_thin=None,
-                         tiering_policy=None, async=True,
+                         tiering_policy=None, async_mode=True,
                          user_cap=False):
         pool_clz = storops.unity.resource.pool.UnityPool
         nas_server_clz = storops.unity.resource.nas_server.UnityNasServer
@@ -82,7 +82,7 @@ class UnityJob(UnityResource):
         resp = cli.post(cls().resource_class, **job_req_body)
         resp.raise_if_err()
         job = cls(_id=resp.resource_id, cli=cli)
-        if not async:
+        if not async_mode:
             job.wait_job_completion()
         return job
 

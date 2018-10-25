@@ -40,7 +40,7 @@ class VNXCifsShareTest(unittest.TestCase):
 
     @staticmethod
     def verify_share_zhuanc(share):
-        assert_that(share.path, equal_to('\zhuanc_fs_100g'))
+        assert_that(share.path, equal_to(r'\zhuanc_fs_100g'))
         assert_that(share.fs_id, equal_to(211))
         assert_that(share.max_users, equal_to(10))
         assert_that(share.comment, equal_to('100g cifs share for zhuanc'))
@@ -95,7 +95,7 @@ class VNXCifsShareTest(unittest.TestCase):
         fs = VNXFileSystem(name='zzz', cli=t_nas())
         mover = self.get_mover_1()
         share = VNXCifsShare.create(t_nas(), fs, 'CIFS', mover)
-        assert_that(share.path, equal_to('\zzz'))
+        assert_that(share.path, equal_to(r'\zzz'))
 
     @patch_nas
     def test_delete_success(self):

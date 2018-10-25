@@ -75,14 +75,14 @@ def to_int_arr(inputs):
 
 def to_int_str_map(str_input):
     ret = {}
-    for pair in re.findall('(\w+):\s*(\w+)', str_input):
+    for pair in re.findall(r'(\w+):\s*(\w+)', str_input):
         ret[to_int(pair[0])] = pair[1].strip()
     return ret
 
 
 def to_int_int_map(str_input):
     ret = {}
-    for pair in re.findall('(\w+):\s*(\w+)', str_input):
+    for pair in re.findall(r'(\w+):\s*(\w+)', str_input):
         ret[to_int(pair[0])] = to_int(pair[1])
     return ret
 
@@ -242,10 +242,10 @@ def url_to_host(url):
     """
 
     regex_url = r"([a-z][a-z0-9+\-.]*://)?" + \
-                "([a-z0-9\-._~%!$&'()*+,;=]+@)?" + \
-                "([a-z0-9\-._~%]+" + \
-                "|\[[a-z0-9\-._~%!$&'()*+,;=:]+\])?" + \
-                "(:(?P<port>[0-9]+))?"
+                r"([a-z0-9\-._~%!$&'()*+,;=]+@)?" + \
+                r"([a-z0-9\-._~%]+" + \
+                r"|\[[a-z0-9\-._~%!$&'()*+,;=:]+\])?" + \
+                r"(:(?P<port>[0-9]+))?"
 
     m = re.match(regex_url, url, re.IGNORECASE)
     if m and m.group(3):
@@ -344,7 +344,7 @@ def block_to_gb(block):
 def to_minute(minute_str):
     ret = None
     if minute_str:
-        m = re.match("00:(\d+):00.000$", minute_str)
+        m = re.match(r"00:(\d+):00.000$", minute_str)
         if m:
             ret = int(m.group(1))
     return ret
@@ -364,7 +364,7 @@ def from_minute(minute_in_int):
 def to_hour(hour_str):
     ret = None
     if hour_str:
-        m = re.match("(\d+):00:00.000$", hour_str)
+        m = re.match(r"(\d+):00:00.000$", hour_str)
         if m:
             ret = int(m.group(1))
     return ret

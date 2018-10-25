@@ -62,9 +62,9 @@ class UnityResource(Resource):
             raise NoIndexException('id is not available for this resource.')
         return ret
 
-    def delete(self, async=False):
+    def delete(self, async_mode=False):
         resp = self._cli.delete(self.resource_class, self.get_id(),
-                                async=async)
+                                async_mode=async_mode)
         resp.raise_if_err()
         return resp
 
@@ -256,7 +256,7 @@ class UnitySingletonResource(UnityResource):
             ret = _id
         return ret
 
-    def delete(self, async=False):
+    def delete(self, async_mode=False):
         raise UnityActionNotAllowedError()
 
 

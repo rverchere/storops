@@ -154,14 +154,14 @@ class UnityNfsShare(UnityResource):
         resp.raise_if_err()
         return cls(_id=resp.resource_id, cli=cli)
 
-    def delete(self, async=False):
+    def delete(self, async_mode=False):
         if self.type == NFSTypeEnum.NFS_SNAPSHOT:
-            resp = super(UnityNfsShare, self).delete(async=async)
+            resp = super(UnityNfsShare, self).delete(async_mode=async_mode)
         else:
             fs = self.filesystem.verify()
             sr = fs.storage_resource
             param = self._cli.make_body(nfsShare=self)
-            resp = sr.modify_fs(async=async, nfsShareDelete=[param])
+            resp = sr.modify_fs(async_mode=async_mode, nfsShareDelete=[param])
         resp.raise_if_err()
         return resp
 

@@ -25,7 +25,7 @@ __author__ = 'Cedric Zhuang'
 
 
 class VNXDisk(VNXCliResource):
-    _index_pattern = re.compile('(\w+)_(\w+)_(\w+)')
+    _index_pattern = re.compile(r'(\w+)_(\w+)_(\w+)')
 
     def __init__(self, index=None, cli=None):
         super(VNXDisk, self).__init__()

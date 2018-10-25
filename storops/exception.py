@@ -991,7 +991,7 @@ class VNXPingNodeTimeOutError(VNXPingNodeError):
 
 @cli_exception
 class VNXPingNodeSuccess(VNXPingNodeError):
-    error_regex = 'TTL=\w+'
+    error_regex = r'TTL=\w+'
 
 
 class VNXSecurityException(VNXException):

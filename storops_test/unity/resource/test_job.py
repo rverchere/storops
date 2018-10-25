@@ -118,7 +118,7 @@ class UnityJobTest(TestCase):
             cli=t_rest(), pool=pool, nas_server=nas_server,
             name='613dd8b0-2c22-4da0-888e-494d320303b7',
             size=4294967296,
-            async=False)
+            async_mode=False)
 
     @patch_rest
     def test_messages(self):

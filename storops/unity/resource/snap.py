@@ -198,15 +198,15 @@ class UnitySnap(UnityResource):
         """Returns True if it is a member snap of cg snap."""
         return self.snap_group is not None
 
-    def delete(self, async=False, even_attached=False):
+    def delete(self, async_mode=False, even_attached=False):
         """Deletes the snapshot.
 
-        :param async: whether to delete the snapshot in async mode.
+        :param async_mode: whether to delete the snapshot in async mode.
         :param even_attached: whether to delete the snapshot even it is
             attached to hosts.
         """
         try:
-            return super(UnitySnap, self).delete(async=async)
+            return super(UnitySnap, self).delete(async_mode=async_mode)
         except UnityDeleteAttachedSnapError:
             if even_attached:
                 log.debug("Force delete the snapshot even if it is attached. "
@@ -216,7 +216,7 @@ class UnitySnap(UnityResource):
                 # It always detaches the snapshot from all hosts. So pass in
                 # `None` here.
                 self.detach_from(None)
-                return super(UnitySnap, self).delete(async=async)
+                return super(UnitySnap, self).delete(async_mode=async_mode)
             else:
                 raise
 

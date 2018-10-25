@@ -54,7 +54,7 @@ class PropMapper(object):
             self._key = self.camel_case_to_under_score(self.label).lower()
         return self._key
 
-    to_delete = re.compile('[\(\)]')
+    to_delete = re.compile(r'[\(\)]')
     p0 = re.compile(r"[A-Za-z0-9']+")
     p1 = re.compile(r"([^_])([A-Z]s[a-z]+|[A-Z][a-z]{2})")
     p2 = re.compile(r'([a-z0-9])([A-Z])')
@@ -164,7 +164,7 @@ class PropDescriptor(PropMapper):
     def index_pattern(self):
         if not self.is_regex:
             ret = re.compile(
-                "(^\s*{})".format(re.escape(self.label)),
+                r"(^\s*{})".format(re.escape(self.label)),
                 flags=self.re_flags)
         else:
             ret = re.compile(self.label, flags=self.re_flags)
@@ -189,7 +189,7 @@ class PropDescriptor(PropMapper):
             # already a PATTERN.
             self.re_flags |= re.DOTALL
             ret = re.compile(
-                '^\s*{}\s*(?P<value>.*){}'.format(
+                r'^\s*{}\s*(?P<value>.*){}'.format(
                     re.escape(self.label),
                     self.end_pattern),
                 self.re_flags)

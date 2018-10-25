@@ -84,7 +84,7 @@ class UnityFileSystem(UnityResource):
         return ret
 
     def delete(self, force_snap_delete=False, force_vvol_delete=False,
-               async=False):
+               async_mode=False):
         sr = self.storage_resource
         if not self.existed or sr is None:
             raise UnityResourceNotFoundError(
@@ -93,7 +93,7 @@ class UnityFileSystem(UnityResource):
                                 sr.get_id(),
                                 forceSnapDeletion=force_snap_delete,
                                 forceVvolDeletion=force_vvol_delete,
-                                async=async)
+                                async_mode=async_mode)
         resp.raise_if_err()
         return resp
 

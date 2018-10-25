@@ -15,9 +15,6 @@ after_success:
     - codecov
 notifications:
     email:
-        - cedric.zhuang@emc.com
-        - yue.zhao2@emc.com
-        - peter.wang13@emc.com
-        - tina.tang@emc.com
-        - ryan.liang@emc.com
-        - yong.huang@emc.com
+        - ryan.liang@dell.com
+        - yong.huang@dell.com
+        - dong.ding@dell.com

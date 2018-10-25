@@ -127,7 +127,7 @@ class UnityFileSystemTest(TestCase):
     @patch_rest
     def test_delete_filesystem_async(self):
         fs = UnityFileSystem(_id='fs_14', cli=t_rest())
-        resp = fs.delete(async=True)
+        resp = fs.delete(async_mode=True)
         assert_that(resp.is_ok(), equal_to(True))
         job = resp.job
         assert_that(job.id, equal_to('N-345'))
