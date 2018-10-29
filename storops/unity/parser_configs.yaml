@@ -1883,3 +1883,24 @@ UnitySystemTierCapacity:
     - label: sizeFree
     - label: sizeTotal
     - label: sizeUsed
+
+
+UnityRemoteSystem:
+  data_src: rest
+  name: remoteSystem
+  properties:
+    - label: altManagementAddressList
+    - label: connectionType
+    - label: health
+    - label: id
+    - label: localSPAInterfaces
+    - label: localSPBInterfaces
+    - label: managementAddress
+    - label: model
+    - label: name
+    - label: remoteSPAInterfaces
+    - label: remoteSPBInterfaces
+    - label: serialNumber
+    - label: syncFcPorts
+    - label: username
+

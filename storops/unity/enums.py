@@ -774,3 +774,48 @@ class InterfaceConfigModeEnum(UnityEnum):
     DISABLED = (0, "Disabled")
     STATIC = (1, "Static")
     AUTO = (2, "Auto")
+
+
+class ReplicationSessionStatusEnum(UnityEnum):
+    UNKNOWN = (0, 'Unknown')
+    OTHER = (1, 'Other')
+    OK = (2, 'OK')
+    PAUSED = (3, 'Paused')
+    FATAL_REPLICATION_ISSUE = (4, 'Fatal_Replication_Issue')
+    LOST_COMMUNICATION = (5, 'Lost_Communication')
+    FAILED_OVER = (6, 'Failed_Over')
+    FAILED_OVER_WITH_SYNC = (7, 'Failed_Over_With_Sync')
+    DESTINATION_EXTEND_NOT_SYNCING = (8, 'Destination_Extend_Not_Syncing')
+    DESTINATION_EXTEND_IN_PROGRESS = (9, 'Destination_Extend_In_Progress')
+    LOST_SYNC_COMMUNICATION = (10, 'Lost_Sync_Communication')
+    DESTINATION_POOL_OUT_OF_SPACE = (11, 'Destination_Pool_Out_Of_Space')
+
+
+class ReplicationSessionNetworkStatusEnum(UnityEnum):
+    UNKNOWN = (0, 'Unknown')
+    OTHER = (1, 'Other')
+    OK = (2, 'OK')
+    LOST_COMMUNICATION = (5, 'Lost_Communication')
+    LOST_SYNC_COMMUNICATION = (10, 'Lost_Sync_Communication')
+
+
+class ReplicationSessionStatusEnum(UnityEnum):
+    UNKNOWN = (0, 'Unknown')
+    OTHER = (1, 'Other')
+    OK = (2, 'OK')
+    PAUSED = (3, 'Paused')
+    FATAL_REPLICATION_ISSUE = (4, 'Fatal_Replication_Issue')
+    LOST_COMMUNICATION = (5, 'Lost_Communication')
+    FAILED_OVER = (6, 'Failed_Over')
+    FAILED_OVER_WITH_SYNC = (7, 'Failed_Over_With_Sync')
+    DESTINATION_EXTEND_NOT_SYNCING = (8, 'Destination_Extend_Not_Syncing')
+    DESTINATION_EXTEND_IN_PROGRESS = (9, 'Destination_Extend_In_Progress')
+    LOST_SYNC_COMMUNICATION = (10, 'Lost_Sync_Communication')
+    DESTINATION_POOL_OUT_OF_SPACE = (11, 'Destination_Pool_Out_Of_Space')
+
+
+class ReplicationCapabilityEnum(UnityEnum):
+    SYNC = (0, 'Sync')
+    ASYNC = (1, 'Async')
+    BOTH = (2, 'Both')
+    NONE = (3, 'None')
