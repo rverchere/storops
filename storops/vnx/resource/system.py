@@ -78,6 +78,7 @@ class VNXSystem(VNXCliResource):
                  timeout=None,
                  heartbeat_interval=None,
                  naviseccli=None,
+                 control_station_ip=None,
                  file_username=None, file_password=None):
         """ initialize a `VNXSystem` instance
 
@@ -93,6 +94,7 @@ class VNXSystem(VNXCliResource):
         :param heartbeat_interval: heartbeat interval used to check the
         alive of sp.  Set to 0 if heart beat is not required.
         :param naviseccli: binary location of naviseccli in your host.
+        :param control_station_ip: IP for control station if not set.
         :param file_username: username for control station login, default to
         username
         :param file_password: password for control station login, default to
@@ -108,7 +110,7 @@ class VNXSystem(VNXCliResource):
         self._timeout = timeout
         self._hb_interval = heartbeat_interval
         self._naviseccli = naviseccli
-
+        self._control_station_ip = control_station_ip
         self._file_username = file_username
         self._file_password = file_password
 
@@ -223,7 +225,10 @@ class VNXSystem(VNXCliResource):
         return self._get_cs_ip()
 
     def _get_cs_ip(self):
-        return VNXDomainNodeList.get_cs_ip(self.serial, self._cli)
+        if self._control_station_ip is not None:
+            return self._control_station_ip
+        else
+            return VNXDomainNodeList.get_cs_ip(self.serial, self._cli)
 
     @property
     def domain(self):
